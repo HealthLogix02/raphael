@@ -395,7 +395,7 @@
     } else {
         // Browser globals (glob is window)
         // Raphael adds itself to window
-        factory(glob, glob.eve);
+        factory(glob, glob.eve || (typeof require == "function" && require('eve')) );
     }
 }(this, function (window, eve) {
     /*\
@@ -5853,7 +5853,7 @@
                 return null;
             }
             id = id.replace(/[\(\)\s,\xb0#]/g, "_");
-            
+
             if (element.gradient && id != element.gradient.id) {
                 SVG.defs.removeChild(element.gradient);
                 delete element.gradient;
@@ -5959,7 +5959,7 @@
             }
             if (type != "none") {
                 var pathId = "raphael-marker-" + type,
-                    markerId = "raphael-marker-" + se + type + w + h;
+                    markerId = "raphael-marker-" + se + type + w + h + o.id;
                 if (!R._g.doc.getElementById(pathId)) {
                     p.defs.appendChild($($("path"), {
                         "stroke-linecap": "round",
@@ -6394,7 +6394,7 @@
          * Element.id
          [ property (number) ]
          **
-         * Unique id of the element. Especially usesful when you want to listen to events of the element, 
+         * Unique id of the element. Especially usesful when you want to listen to events of the element,
          * because all events are fired in format `<module>.<action>.<id>`. Also useful for @Paper.getById method.
         \*/
         this.id = R._oid++;
@@ -6599,7 +6599,7 @@
         this.clip && $(this.clip, {transform: this.matrix.invert()});
         this.pattern && updatePosition(this);
         this.node && $(this.node, {transform: this.matrix});
-    
+
         if (_.sx != 1 || _.sy != 1) {
             var sw = this.attrs[has]("stroke-width") ? this.attrs["stroke-width"] : 1;
             this.attr({"stroke-width": sw});
@@ -6846,7 +6846,7 @@
         }
         var parent = this.node.parentNode;
         if (parent.tagName.toLowerCase() == "a") {
-            parent.parentNode.insertBefore(this.node.parentNode, this.node.parentNode.parentNode.firstChild); 
+            parent.parentNode.insertBefore(this.node.parentNode, this.node.parentNode.parentNode.firstChild);
         } else if (parent.firstChild != this.node) {
             parent.insertBefore(this.node, this.node.parentNode.firstChild);
         }
@@ -8113,5 +8113,8 @@
     // Even with AMD, Raphael should be defined globally
     oldRaphael.was ? (g.win.Raphael = R) : (Raphael = R);
 
+    if(typeof exports == "object"){
+        module.exports = R;
+    }
     return R;
 }));

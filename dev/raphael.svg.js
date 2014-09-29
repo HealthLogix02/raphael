@@ -98,7 +98,7 @@ window.Raphael && window.Raphael.svg && function(R) {
                 return null;
             }
             id = id.replace(/[\(\)\s,\xb0#]/g, "_");
-            
+
             if (element.gradient && id != element.gradient.id) {
                 SVG.defs.removeChild(element.gradient);
                 delete element.gradient;
@@ -204,7 +204,7 @@ window.Raphael && window.Raphael.svg && function(R) {
             }
             if (type != "none") {
                 var pathId = "raphael-marker-" + type,
-                    markerId = "raphael-marker-" + se + type + w + h;
+                    markerId = "raphael-marker-" + se + type + w + h + o.id;
                 if (!R._g.doc.getElementById(pathId)) {
                     p.defs.appendChild($($("path"), {
                         "stroke-linecap": "round",
@@ -639,7 +639,7 @@ window.Raphael && window.Raphael.svg && function(R) {
          * Element.id
          [ property (number) ]
          **
-         * Unique id of the element. Especially usesful when you want to listen to events of the element, 
+         * Unique id of the element. Especially usesful when you want to listen to events of the element,
          * because all events are fired in format `<module>.<action>.<id>`. Also useful for @Paper.getById method.
         \*/
         this.id = R._oid++;
@@ -844,7 +844,7 @@ window.Raphael && window.Raphael.svg && function(R) {
         this.clip && $(this.clip, {transform: this.matrix.invert()});
         this.pattern && updatePosition(this);
         this.node && $(this.node, {transform: this.matrix});
-    
+
         if (_.sx != 1 || _.sy != 1) {
             var sw = this.attrs[has]("stroke-width") ? this.attrs["stroke-width"] : 1;
             this.attr({"stroke-width": sw});
@@ -1091,7 +1091,7 @@ window.Raphael && window.Raphael.svg && function(R) {
         }
         var parent = this.node.parentNode;
         if (parent.tagName.toLowerCase() == "a") {
-            parent.parentNode.insertBefore(this.node.parentNode, this.node.parentNode.parentNode.firstChild); 
+            parent.parentNode.insertBefore(this.node.parentNode, this.node.parentNode.parentNode.firstChild);
         } else if (parent.firstChild != this.node) {
             parent.insertBefore(this.node, this.node.parentNode.firstChild);
         }
